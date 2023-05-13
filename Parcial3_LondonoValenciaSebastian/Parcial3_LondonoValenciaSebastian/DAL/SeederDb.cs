@@ -14,6 +14,9 @@ namespace Parcial3_LondonoValenciaSebastian.DAL
         public async Task SeedAsync()
         {
             await _context.Database.EnsureCreatedAsync();
+            await PopulateServicesAsync();
+
+            await _context.SaveChangesAsync();
 
         }
 
