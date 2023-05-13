@@ -11,15 +11,16 @@ namespace Parcial3_LondonoValenciaSebastian.DAL
         {
 
         }
-        // Se mapea la identidad para convertirla en una tabla
         public DbSet<Service> Services { get; set; }
+        public DbSet<Vehicle> Vehicles { get; set; }
+        public DbSet<VehicleDetails> VehicleDetails { get; set; }
 
-        //Vamos a crear un índice para la tabla Countries
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<Service>().HasIndex(c => c.Name).IsUnique();
-
+            modelBuilder.Entity<VehicleDetails>()
+                .HasOne(vd => vd.Vehicle)
+                .WithMany()
+                .HasForeignKey(vd => vd.VehicleId);
         }
 
 
