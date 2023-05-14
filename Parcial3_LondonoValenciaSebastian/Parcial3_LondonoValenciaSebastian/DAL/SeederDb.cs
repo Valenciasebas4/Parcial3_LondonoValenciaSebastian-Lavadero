@@ -1,4 +1,5 @@
 ﻿using Parcial3_LondonoValenciaSebastian.DAL.Entities;
+using Parcial3_LondonoValenciaSebastian.Enum;
 
 namespace Parcial3_LondonoValenciaSebastian.DAL
 {
@@ -15,6 +16,7 @@ namespace Parcial3_LondonoValenciaSebastian.DAL
         {
             await _context.Database.EnsureCreatedAsync();
             await PopulateServicesAsync();
+
 
             await _context.SaveChangesAsync();
 
@@ -33,5 +35,7 @@ namespace Parcial3_LondonoValenciaSebastian.DAL
                 _context.Services.Add(new Service { Id = Guid.NewGuid(), Name = "Lavada Chasis", Price = 90000 });
             }
         }
+
+
     }
 }

@@ -1,10 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Parcial3_LondonoValenciaSebastian.DAL.Entities;
 using System.Diagnostics.Metrics;
 
 namespace Parcial3_LondonoValenciaSebastian.DAL
 {
-    public class DataBaseContext :DbContext
+    public class DataBaseContext : IdentityDbContext<User>
     {
 
         public DataBaseContext(DbContextOptions<DataBaseContext> options) : base(options)
@@ -17,10 +19,12 @@ namespace Parcial3_LondonoValenciaSebastian.DAL
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<VehicleDetails>()
-                .HasOne(vd => vd.Vehicle)
-                .WithMany()
-                .HasForeignKey(vd => vd.VehicleId);
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Vehicle>().HasIndex("Id", "ServiceId").IsUnique(); // Para estos casos, debo crear un índice Compuesto
+            modelBuilder.Entity<VehicleDetails>().HasIndex("Id", "VehicleId").IsUnique(); // Para estos casos, debo crear un índice Compuesto
+
+    
+
         }
 
 
