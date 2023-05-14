@@ -83,10 +83,10 @@ namespace Parcial3_LondonoValenciaSebastian.Services
 			return await _userManager.IsInRoleAsync(user, roleName);
 		}
 
-		/*public async Task<SignInResult> LoginAsync(LoginViewModel loginViewModel)
+		public async Task<SignInResult> LoginAsync(LoginViewModel loginViewModel)
 		{
 			return await _signInManager.PasswordSignInAsync(loginViewModel.Username, loginViewModel.Password, loginViewModel.RememberMe, false);
-		}*/
+		}
 
 		public async Task LogoutAsync()
 		{
