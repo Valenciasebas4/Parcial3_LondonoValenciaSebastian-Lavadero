@@ -21,8 +21,8 @@ namespace Parcial3_LondonoValenciaSebastian.DAL
             await _context.Database.EnsureCreatedAsync();
             await PopulateServicesAsync();
             await PopulateRolesAsync();
-            await PopulateUserAsync("Steve", "Jobs", "steve_jobs_admin@yopmail.com", "3002323232", "Street Apple", "102030", "SteveJobs.png", UserType.Admin);
-            await PopulateUserAsync("Bill", "Gates", "bill_gates_user@yopmail.com", "4005656656", "Street Microsoft", "405060", "BillGates.png", UserType.User);
+            await PopulateUserAsync("Sebastian", "Londoño", "sebas@yopmail.com", "3142393101", "Barbosa", "1035234145", UserType.Admin);
+            await PopulateUserAsync("Jessica", "Gomez", "jess@yopmail.com", "3017585232", "Barbosa", "1035232261", UserType.Client);
 
             await _context.SaveChangesAsync();
 
@@ -42,10 +42,38 @@ namespace Parcial3_LondonoValenciaSebastian.DAL
             }
         }
 
+
+        private async Task PopulateUserAsync(string firstName, string lastName, string email, string phone, string address, string document,UserType userType)
+        {
+            User user = await _userHelper.GetUserAsync(email);
+            if (user == null)
+            {
+                 
+
+                user = new User
+                {
+                    CreatedDate = DateTime.Now,
+                    FirstName = firstName,
+                    LastName = lastName,
+                    Email = email,
+                    UserName = email,
+                    PhoneNumber = phone,
+                    Address = address,
+                    Document = document,
+                    UserType = userType,
+ 
+                };
+
+                await _userHelper.AddUserAsync(user, "123456");
+                await _userHelper.AddUserToRoleAsync(user, userType.ToString());
+            }
+        }
+
         private async Task PopulateRolesAsync()
         {
             await _userHelper.AddRoleAsync(UserType.Admin.ToString());
             await _userHelper.AddRoleAsync(UserType.User.ToString());
+            await _userHelper.AddRoleAsync(UserType.Client.ToString());
         }
     }
 }
